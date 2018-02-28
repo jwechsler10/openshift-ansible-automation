@@ -1,0 +1,14 @@
+---
+
+- name: Create a project
+  oc:
+    validate_certs: false 
+    host: "{{ master_url }}"
+    state: present
+    inline:
+      kind: ProjectRequest
+      metadata:
+        name: ansibleproject
+      displayName: Ansible Test Project
+      description: A test project made with ansible
+    token: "{{ token }}"
