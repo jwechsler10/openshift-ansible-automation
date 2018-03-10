@@ -1,0 +1,21 @@
+---
+
+# This playbook can be used to create a project  on Openshift
+
+
+- name: create a project request
+  hosts: masters
+
+  vars_prompt:
+  - name: "project_name"
+    prompt: "What is the name of the project you want to create?"
+  
+  - name: "project_description"
+    prompt: "Brief project description"
+
+  - name: "project_display_name"
+    prompt: "What is the project display name?"
+ 
+  roles: 
+    - create_project
+    

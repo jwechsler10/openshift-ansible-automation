@@ -1,0 +1,30 @@
+---
+
+- name: Make the host node unschedulable 
+  command: oc adm manage-node "{{ inventory_hostname }}" --schedulable=false
+
+- name: Migrate the pods from the host
+  command: oc adm drain "{{ inventory_hostname }}" --force --delete-local-data --ignore-daemonsets
+
+- name: run yum update to update packages
+  yum: 
+    name: '*'
+    state: latest
+
+- name: reboot nodes
+  shell: sleep 2 && shutdown -r now "Ansible reboot"
+  aysnc: 1
+  poll: 0
+  ignore_errors: true
+
+- name: wait for servers to come back
+  local_action: wait_for
+  args:
+    host: "{{ inventory_hostname }}" 
+    port: 22
+    state: started
+    delay: 30
+    timeout: 300
+
+- name: configure the host to be schedulable again
+  command: oc adm manage-node "{{ inventory_hostname }}" --schedulable

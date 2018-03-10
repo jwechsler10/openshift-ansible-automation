@@ -1,0 +1,9 @@
+---
+# This playbook can be used to update a node in an OpenShift cluster
+
+- name: Prepare hosts for system updates
+  hosts: to_update
+  become: yes 
+
+  roles:
+  - system_updates
