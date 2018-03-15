@@ -102,4 +102,4 @@ ENV/
 
 # Ansible related files
 *.retry
-hosts
+/hosts
