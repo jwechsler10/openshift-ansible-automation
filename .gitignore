@@ -100,4 +100,6 @@ ENV/
 # mypy
 .mypy_cache/
 
+# Ansible related files
 *.retry
+hosts
