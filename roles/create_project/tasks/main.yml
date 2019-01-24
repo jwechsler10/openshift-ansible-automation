@@ -3,9 +3,9 @@
 #- name: login to openshift cluster
 #  shell: oc login  {{ master_url}}:8433  -u system:admin --insecure-skip-tls-verify
 
-#- name: Get token for ansible service account to create requests
-#  shell: oc sa get-token ansible -n myproject
-#  register: token_output
+- name: Get token for ansible service account to create requests
+  shell: oc sa get-token ansible -n myproject
+  register: token
 
 - name: Create a project
   oc:
@@ -18,4 +18,4 @@
         name: "{{ project_name }}"
       displayName: "{{ project_display_name }}"
       description: "{{ project_description }}"
-    token: "{{ token  }}"
+    token: "{{ token.stdout }}"
